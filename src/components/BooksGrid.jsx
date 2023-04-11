@@ -2,6 +2,7 @@ import BookCard from "./BookCard";
 import Modal from "react-modal";
 import { useGoogleBooks, usePublisherBooks } from "../hooks/useGoogle";
 import useModal from "../hooks/useModal";
+import { useState } from "react";
 
 const customStyles = {
   content: {
@@ -17,8 +18,8 @@ const customStyles = {
 
 export default function BooksGrid({ query, limit }) {
   const { books, error, isLoading } = useGoogleBooks(query, limit);
-  const { modalIsOpen, closeModal, openModal, publisher, setPublisher } =
-    useModal();
+  const [publisher, setPublisher] = useState(null);
+  const { modalIsOpen, closeModal, openModal } = useModal();
   const { publisherBooks } = usePublisherBooks(publisher, 3);
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Something went wrong...</p>;
